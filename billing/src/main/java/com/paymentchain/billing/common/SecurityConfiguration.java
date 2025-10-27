@@ -42,13 +42,13 @@ private Environment env;
         "/swagger-ui/**",//
         "/configuration/ui", //
         "/swagger-resources", //
-        "/configuration/security", //   
+        "/configuration/security", //
         "/webjars/**", //
         "/login",
         "/h2-console/**"};
 
     @Bean
-    public UserDetailsService users() {
+    UserDetailsService users() {
         UserDetails user = User.builder()
                 .username("user")
                 .password(passwordEncoder().encode("qwerty"))
@@ -64,12 +64,12 @@ private Environment env;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic(Customizer.withDefaults())
                  .formLogin(form -> form
@@ -92,7 +92,7 @@ private Environment env;
     }
 
     @Bean
-    public Customizer<CorsConfigurer<HttpSecurity>> corsCustomizer() {
+    Customizer<CorsConfigurer<HttpSecurity>> corsCustomizer() {
         return (cors) -> {
             CorsConfiguration cc = new CorsConfiguration();
             cc.setAllowedHeaders(Arrays.asList("Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"));

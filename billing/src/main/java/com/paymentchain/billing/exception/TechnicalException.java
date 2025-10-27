@@ -9,12 +9,15 @@ package com.paymentchain.billing.exception;
 import com.paymentchain.billing.enums.ErrorCodesEnum;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
+
 /**
  * @author sotobotero
  */
 public class TechnicalException extends Exception {
 
-private static final long serialVersionUID = 4593615040723830877L;
+    @Serial
+    private static final long serialVersionUID = 4593615040723830877L;
 	
     private String code;
     private HttpStatus httpStatus;

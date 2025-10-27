@@ -76,7 +76,7 @@ public class InvoiceRestController {
     }
 
     @GetMapping("/pageable")
-    public Page<InvoiceResponse> getAllPaged(@RequestParam("page") int page, @RequestParam("size") int size) throws BusinessRuleException {
+    public Page<InvoiceResponse> getAllPaged(@RequestParam int page, @RequestParam int size) throws BusinessRuleException {
          Pageable pageable = PageRequest.of(page, size);
         Page<Invoice> findAll = billingRepository.findAll(pageable);
         if (findAll.isEmpty()) {
@@ -109,7 +109,7 @@ public class InvoiceRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws BusinessRuleException {
         Optional<Invoice> dto = billingRepository.findById(Long.valueOf(id));
-        if (!dto.isPresent()) {
+        if (dto.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         billingRepository.delete(dto.get());

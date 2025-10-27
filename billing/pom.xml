@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.5.7</version>
+        <relativePath/>
+        <!-- lookup parent from repository -->
     </parent>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target> 
-        <spring-boot.version>3.1.2</spring-boot.version>  
+        <maven.compiler.target>17</maven.compiler.target>
+        <spring-boot.version>3.1.2</spring-boot.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.34</lombok.version>
-        <springdoc-openapi>2.4.0</springdoc-openapi>     
+        <springdoc-openapi>2.6.0</springdoc-openapi>
         <maven.archetypep.version>3.2.1</maven.archetypep.version>
  
-    </properties> 
+    </properties>
        
     <groupId>com.paymentchain</groupId>
     <artifactId>billing</artifactId>
@@ -29,9 +30,15 @@
     <packaging>jar</packaging>
 
     <name>billing</name>
-    <description>Basic project for Spring Boot</description>      
+    <description>Basic project for Spring Boot</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -39,29 +46,30 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>          
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>           
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>       
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>           
-        </dependency>  
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
               
         <dependency>
             <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId> <!-- O la versión más reciente -->
-        </dependency>   
+            <artifactId>postgresql</artifactId>
+            <!-- O la versión más reciente -->
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -69,7 +77,12 @@
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>           
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -80,21 +93,21 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>   
-        </dependency> 
+            <version>${mapstruct.version}</version>
+        </dependency>
         
         <!--Jakarta Bean Validation provider-->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-        </dependency>                              
+        </dependency>
     </dependencies>
 
     <!-- Add profiles for prod and local -->
     <profiles>
         <!-- local profile using h2-->
         <profile>
-            <id>local</id>     
+            <id>local</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -105,11 +118,11 @@
         </profile>
         <!-- Local profile using postgres -->
         <profile>
-            <id>prod</id>            
+            <id>prod</id>
         </profile>
     </profiles>
     
-    <build>       
+    <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -127,10 +140,8 @@
            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>               
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.source}</target>
                     <!-- generate mappers -->
                     <annotationProcessorPaths>
                         <path>
@@ -142,17 +153,23 @@
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${mapstruct.version}</version>
-                        </path> 
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
                     </annotationProcessorPaths>
+                    <release>${java.version}</release>
                 </configuration>
-            </plugin>   
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-archetype-plugin</artifactId>
                 <version>${maven.archetypep.version}</version>
                 <configuration>
-                    <outputDirectory>/home/sotobotero/workspace/repositories/personal/teaching_resources/archetypes/sotobotero-spring-boot-security-mapstruct-crud</outputDirectory>  
-                    <propertyFile>archetype.properties</propertyFile>    
+                    <outputDirectory>/home/sotobotero/workspace/repositories/personal/teaching_resources/archetypes/sotobotero-spring-boot-security-mapstruct-crud</outputDirectory>
+                    <propertyFile>archetype.properties</propertyFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -162,7 +179,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>          
+            </plugin>
         </plugins>
     </build>
 </project>
